@@ -402,14 +402,24 @@ function Goals() {
 }
 
 function Contact() {
-  const [sent, setSent] = useState(false);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    const subject = encodeURIComponent(String(f.get("subject") || "Portfolio Contact"));
-    const body = encodeURIComponent(`From: ${f.get("name")} <${f.get("email")}>\n\n${f.get("message")}`);
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-    setSent(true);
+    if (!formRef.current) return;
+    setStatus("loading");
+    try {
+      await emailjs.sendForm(
+        "service_p7xr8ft",
+        "template_ql6s5rc",
+        formRef.current,
+        { publicKey: "7jRD8K-QswEHgU9r8" }
+      );
+      setStatus("success");
+      formRef.current.reset();
+    } catch {
+      setStatus("error");
+    }
   };
   const items = [
     { icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
@@ -439,7 +449,7 @@ function Contact() {
               return href ? <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="block">{Inner}</a> : <div key={label}>{Inner}</div>;
             })}
           </div>
-          <form onSubmit={onSubmit} className="lg:col-span-3 rounded-2xl bg-card border border-border shadow-card p-6 md:p-8 space-y-4">
+          <form ref={formRef} onSubmit={onSubmit} className="lg:col-span-3 rounded-2xl bg-card border border-border shadow-card p-6 md:p-8 space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
               <Field name="name" label="Name" placeholder="Your full name" required />
               <Field name="email" type="email" label="Email" placeholder="you@example.com" required />
@@ -449,10 +459,21 @@ function Contact() {
               <label className="text-sm font-semibold mb-1.5 block">Message</label>
               <textarea name="message" required rows={5} placeholder="Tell me a bit more..." className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
             </div>
-            <button type="submit" className="inline-flex items-center gap-2 bg-gradient-primary text-white px-6 py-3 rounded-full font-semibold shadow-glow hover:opacity-90 transition">
-              <Send className="w-4 h-4" /> Send Message
+            <button type="submit" disabled={status === "loading"}
+              className="inline-flex items-center gap-2 bg-gradient-primary text-white px-6 py-3 rounded-full font-semibold shadow-glow hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed">
+              {status === "loading" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+              {status === "loading" ? "Sending…" : "Send Message"}
             </button>
-            {sent && <p className="text-sm text-[var(--cyan)] font-medium">Opening your email client…</p>}
+            {status === "success" && (
+              <p className="text-sm text-green-500 font-medium flex items-center gap-1.5">
+                <CheckCircle className="w-4 h-4" /> Message sent successfully!
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-sm text-destructive font-medium">
+                Something went wrong. Please try again later.
+              </p>
+            )}
           </form>
         </div>
       </div>
