@@ -418,7 +418,7 @@ function Projects() {
       tech: ["Java", "Spring Boot", "Spring Security", "MySQL", "REST APIs"],
       desc: "Backend system for venue bookings with user registration, authentication, and role-based authorization. Implemented Spring Security and RESTful APIs with MySQL.",
       features: ["User Authentication", "Role-Based Access Control", "REST API Architecture", "Secure DB Integration"] },
-    { title: "Console-Based ATM Interface", time: "August 2026",
+    { title: "Console-Based ATM Interface", time: "August 2025",
       tech: ["Core Java", "OOP"],
       desc: "Command-line banking application supporting balance inquiry, deposits, withdrawals, and mini statements with robust exception handling.",
       features: ["Account Management", "Transaction Processing", "Exception Handling", "OOP Architecture"] },
