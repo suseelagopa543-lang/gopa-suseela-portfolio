@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import profileImg from "@/assets/profile.jpg";
+import emailjs from "@emailjs/browser";
 import {
   Github, Linkedin, Mail, Phone, MapPin, Download, ArrowRight, ArrowUp,
   Code2, Server, Database, Wrench, Briefcase, FolderGit2,
   Target, Send, ExternalLink, Calendar, Award, Sparkles,
+  Loader2, CheckCircle,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
