@@ -244,40 +244,133 @@ function Education() {
 
 function Skills() {
   const cats = [
-    { icon: Code2, title: "Programming", items: [["Java", 90], ["Core Java", 90], ["OOP Concepts", 88], ["Multithreading", 78], ["Collections", 85], ["JDBC", 82]] as const },
-    { icon: Server, title: "Backend", items: [["Spring Framework", 85], ["Spring Boot", 88], ["Spring MVC", 80], ["Spring Security", 78], ["Spring Data JPA", 80], ["REST APIs", 88], ["Hibernate", 78]] as const },
-    { icon: Code2, title: "Frontend", items: [["HTML", 88], ["CSS", 82]] as const },
-    { icon: Database, title: "Database", items: [["MySQL", 85]] as const },
-    { icon: Wrench, title: "Tools & IDEs", items: [["IntelliJ IDEA", 85], ["Eclipse", 82], ["VS Code", 88], ["MySQL Workbench", 82], ["Git", 80], ["GitHub", 82]] as const },
+    {
+      icon: Code2,
+      title: "Programming",
+      color: "oklch(0.546 0.224 263)",
+      items: [
+        ["Java", 92],
+        ["OOP Concepts", 90],
+        ["Collections Framework", 88],
+        ["Stream API", 82],
+        ["Multithreading", 78],
+        ["JDBC", 82],
+      ] as const,
+    },
+    {
+      icon: Server,
+      title: "Backend",
+      color: "oklch(0.58 0.15 180)",
+      items: [
+        ["Spring Framework", 85],
+        ["Spring Boot", 88],
+        ["Spring MVC", 80],
+        ["Spring Security", 78],
+        ["Spring Data JPA", 80],
+        ["REST APIs", 88],
+        ["Hibernate", 78],
+      ] as const,
+    },
+    {
+      icon: Code2,
+      title: "Frontend",
+      color: "oklch(0.65 0.17 50)",
+      items: [
+        ["HTML", 88],
+        ["CSS", 82],
+      ] as const,
+    },
+    {
+      icon: Database,
+      title: "Database",
+      color: "oklch(0.55 0.2 300)",
+      items: [
+        ["MySQL", 85],
+      ] as const,
+    },
+    {
+      icon: Wrench,
+      title: "Tools & IDEs",
+      color: "oklch(0.6 0.14 260)",
+      items: [
+        ["IntelliJ IDEA", 85],
+        ["Eclipse", 82],
+        ["VS Code", 88],
+        ["MySQL Workbench", 82],
+      ] as const,
+    },
   ];
   return (
     <section id="skills" className="py-24 bg-[var(--surface)]">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeader kicker="Tech I work with" title="Skills & Expertise" />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cats.map(({ icon: Icon, title, items }) => (
-            <div key={title} className="rounded-2xl bg-card shadow-card border border-border p-6 hover:shadow-glow transition">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-11 h-11 rounded-xl bg-gradient-primary text-white flex items-center justify-center">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="font-display font-bold text-lg">{title}</h3>
-              </div>
-              <div className="space-y-4">
-                {items.map(([name, pct]) => (
-                  <div key={name}>
-                    <div className="flex justify-between text-sm mb-1.5">
-                      <span className="font-medium">{name}</span>
-                      <span className="text-muted-foreground text-xs">{pct}%</span>
+        <SectionHeader
+          kicker="Tech I work with"
+          title="Skills & Expertise"
+          desc="Proficiency in Java Full Stack technologies, from core programming to production tools."
+        />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {cats.map(({ icon: Icon, title, color, items }) => {
+            const pctAvg = Math.round(
+              items.reduce((sum, [, p]) => sum + p, 0) / items.length
+            );
+            return (
+              <div
+                key={title}
+                className="rounded-2xl bg-card border border-border shadow-card p-6 hover:shadow-glow hover:-translate-y-1 transition duration-300 group"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-11 h-11 rounded-xl flex items-center justify-center text-white shadow"
+                      style={{ backgroundColor: color }}
+                    >
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <div className="h-2 rounded-full bg-muted overflow-hidden">
-                      <div className="h-full bg-gradient-primary animate-bar" style={{ width: `${pct}%` }} />
+                    <div>
+                      <h3 className="font-display font-bold text-base leading-tight">
+                        {title}
+                      </h3>
+                      <span className="text-[11px] text-muted-foreground font-medium">
+                        {items.length} skill{items.length > 1 ? "s" : ""}
+                      </span>
                     </div>
                   </div>
-                ))}
+                  <div className="text-right">
+                    <div className="text-lg font-bold leading-none" style={{ color }}>
+                      {pctAvg}%
+                    </div>
+                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
+                      Avg
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3.5">
+                  {items.map(([name, pct]) => (
+                    <div key={name}>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span className="font-medium text-foreground text-[13px]">
+                          {name}
+                        </span>
+                        <span className="text-muted-foreground text-xs tabular-nums font-medium">
+                          {pct}%
+                        </span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                        <div
+                          className="h-full rounded-full transition-all duration-700 ease-out group-hover:brightness-110"
+                          style={{
+                            width: `${pct}%`,
+                            backgroundColor: color,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -325,7 +418,7 @@ function Projects() {
       tech: ["Java", "Spring Boot", "Spring Security", "MySQL", "REST APIs"],
       desc: "Backend system for venue bookings with user registration, authentication, and role-based authorization. Implemented Spring Security and RESTful APIs with MySQL.",
       features: ["User Authentication", "Role-Based Access Control", "REST API Architecture", "Secure DB Integration"] },
-    { title: "Console-Based ATM Interface", time: "August 2026",
+    { title: "Console-Based ATM Interface", time: "August 2025",
       tech: ["Core Java", "OOP"],
       desc: "Command-line banking application supporting balance inquiry, deposits, withdrawals, and mini statements with robust exception handling.",
       features: ["Account Management", "Transaction Processing", "Exception Handling", "OOP Architecture"] },
