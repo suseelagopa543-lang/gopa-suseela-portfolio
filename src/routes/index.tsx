@@ -55,7 +55,7 @@ function Portfolio() {
               <a key={id} href={`#${id}`} className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">{label}</a>
             ))}
           </nav>
-          <a href={RESUME} target="_blank" rel="noreferrer" className="hidden lg:inline-flex items-center gap-2 rounded-full bg-gradient-primary text-white px-4 py-2 text-sm font-semibold shadow-glow hover:opacity-90 transition">
+          <a href={RESUME} target="_blank" rel="noopener noreferrer" className="hidden lg:inline-flex items-center gap-2 rounded-full bg-gradient-primary text-white px-4 py-2 text-sm font-semibold shadow-glow hover:opacity-90 transition">
             <Download className="w-4 h-4" /> Resume
           </a>
           <button onClick={() => setOpen(!open)} className="lg:hidden p-2" aria-label="Menu">
@@ -114,7 +114,7 @@ function Hero() {
             <a href="#projects" className="inline-flex items-center gap-2 bg-white text-[var(--navy)] px-5 py-3 rounded-full font-semibold hover:bg-[var(--cyan)] hover:text-white transition shadow-glow">
               View Projects <ArrowRight className="w-4 h-4" />
             </a>
-            <a href={RESUME} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 glass-dark text-white px-5 py-3 rounded-full font-semibold hover:bg-white/15 transition">
+            <a href={RESUME} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 glass-dark text-white px-5 py-3 rounded-full font-semibold hover:bg-white/15 transition">
               <Download className="w-4 h-4" /> Download Resume
             </a>
             <a href="#contact" className="inline-flex items-center gap-2 border border-white/30 px-5 py-3 rounded-full font-semibold hover:bg-white/10 transition">Contact Me</a>
@@ -147,8 +147,9 @@ function Hero() {
 }
 
 function SocialIcon({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
+  const isExternal = href.startsWith("http");
   return (
-    <a href={href} target="_blank" rel="noreferrer" aria-label={label}
+    <a href={href} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} aria-label={label}
        className="w-11 h-11 rounded-full glass-dark flex items-center justify-center hover:bg-[var(--cyan)] hover:text-[var(--navy)] transition">
       {children}
     </a>
@@ -421,7 +422,7 @@ function Projects() {
           ))}
         </div>
         <div className="text-center mt-10">
-          <a href={GITHUB} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
+          <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
             View more on GitHub <ExternalLink className="w-4 h-4" />
           </a>
         </div>
@@ -492,7 +493,7 @@ function Contact() {
                   </div>
                 </div>
               );
-              return href ? <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="block">{Inner}</a> : <div key={label}>{Inner}</div>;
+              return href ? <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="block">{Inner}</a> : <div key={label}>{Inner}</div>;
             })}
           </div>
           <form ref={formRef} onSubmit={onSubmit} className="lg:col-span-3 rounded-2xl bg-card border border-border shadow-card p-6 md:p-8 space-y-4">
