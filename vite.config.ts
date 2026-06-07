@@ -6,16 +6,16 @@ export default defineConfig({
   nitro: false,
   tanstackStart: {
     server: { entry: "server" },
-    // Enable SPA mode so TanStack Start generates a static index.html shell
-    // at build time. The client router hydrates and handles routing.
-    spa: {
-      enabled: true,
-    },
+    // Prerender every route to static HTML at build time. Combined with
+    // `nitro: false` above, the output is a pure static site under dist/.
     pages: [
       {
         path: "/",
         prerender: { enabled: true, crawlLinks: true },
       },
     ],
+    spa: {
+      enabled: true,
+    },
   },
 });
