@@ -250,7 +250,7 @@ function Skills() {
       icon: Code2,
       title: "Programming",
       color: "oklch(0.546 0.224 263)",
-      items: ["Java", "OOP Concepts", "Collections Framework", "Stream API", "Multithreading", "JDBC"],
+      items: ["Java", "OOPS Concepts", "Collections Framework", "Stream API", "Multithreading", "JDBC"],
     },
     {
       icon: Server,
