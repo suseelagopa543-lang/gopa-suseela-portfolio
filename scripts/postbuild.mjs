@@ -41,7 +41,6 @@
 
 // console.log("[postbuild] dist/index.html ready for static deploy.");
 
-#!/usr/bin/env node
 import { existsSync, rmSync, renameSync, readdirSync, cpSync } from "node:fs";
 import { join } from "node:path";
 
