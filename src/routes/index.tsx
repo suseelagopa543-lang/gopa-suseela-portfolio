@@ -17,7 +17,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Gopa Suseela — Java Full Stack Developer" },
       { property: "og:description", content: "Aspiring Java Full Stack Developer specializing in Spring Boot, REST APIs, and MySQL." },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    // links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: import.meta.env.BASE_URL }],
   }),
   component: Portfolio,
 });
